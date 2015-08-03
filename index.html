@@ -1,17 +1,49 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Neighbourhood map</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="css/main.css">
-    </head>
-    <body>
-        <p>Neighbourhood map</p>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Neighbourhood map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+</head>
 
-        <script src="js/jquery.js"></script>
-        <script src="js/main.js"></script>
-    </body>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="text-center">Hamburg Altona <small>Neighbourhood map</small></h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12 valigned">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-9">
+                <div id="map"></div>
+            </div>
+            <div class="col-md-3">
+                <div class="list-group" data-bind="foreach: locationList">
+                    <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading" data-bind="text: name, click: $parent.setCurrentLocation"></h4>
+                        <p class="list-group-item-text">Additional description of location goes here for a few lines</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/knockout.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
 </html>

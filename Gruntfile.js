@@ -8,7 +8,9 @@ module.exports = function(grunt) {
                     // Keys are destinations (prefixed with `options.destPrefix`)
                     // Values are sources (prefixed with `options.srcPrefix`); One source per destination
                     // e.g. 'bower_components/chai/lib/chai.js' will be copied to 'test/js/libs/chai.js'
-                    'js/jquery.js': 'jquery/dist/jquery.js'
+                    'js/jquery.js': 'jquery/dist/jquery.js',
+                    'css/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
+                    'js/knockout.js': 'knockout/dist/knockout.js'
                 }
             }
         },
@@ -68,7 +70,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-bowercopy');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-clean');
