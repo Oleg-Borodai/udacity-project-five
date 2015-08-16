@@ -13,8 +13,28 @@
     align-items: center;
 }
 
+body {
+  padding-top: 50px;
+  height:
+   }
+
+#map-container {
+  padding: 0;
+}
 #map {
-  height: 400px;
+  height: calc(100vh - 50px);
   width: 100%;
   padding-bottom: 5%;
+}
+
+.overlay {
+  position: absolute;
+  top:70px;
+  left:75%;
+  width: 250px;
+}
+
+.results-pc {
+   max-height: calc(100vh - 90px);
+   overflow-y: auto;
 }

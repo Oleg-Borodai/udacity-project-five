@@ -12,36 +12,36 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="page-header">
-            <h1 class="text-center">Hamburg Altona <small>Neighbourhood map</small></h1>
-        </div>
-        <div class="row">
-            <div class="col-md-12 valigned">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                </div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Neighbourhood map</a>
             </div>
+            <form class=" nav navbar-form navbar-right" data-bind="submit: addLocation">
+                <input type="text" class="form-control" placeholder="Search for..." name="searchText">
+                <input class="btn btn-default" type="submit" value="Go!">
+            </form>
         </div>
-        <br>
+    </nav>
+    <div class="container" id="map-container">
         <div class="row">
             <div class="col-md-9">
-                <div id="map"></div>
+                <div data-bind="map: map, markers: locationList" id="map"></div>
             </div>
             <div class="col-md-3">
-                <div class="list-group" data-bind="foreach: locationList">
-                    <a href="#" class="list-group-item">
-                        <h4 class="list-group-item-heading" data-bind="text: name, click: $parent.setCurrentLocation"></h4>
-                        <p class="list-group-item-text">Additional description of location goes here for a few lines</p>
+                <h3 class="text-center">Search results</h3>
+                <div class="list-group results-pc" data-bind="foreach: locationList">
+                    <a href="#" class="list-group-item" data-bind="click: $parent.setCurrentLocation">
+                        <h4 class="list-group-item-heading" data-bind="text: name"></h4>
+                        <p class="list-group-item-text" data-bind="text: description"></p>
                     </a>
                 </div>
             </div>
         </div>
     </div>
+    </div>
     <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
     <script src="js/knockout.js"></script>
     <script src="js/main.js"></script>
 </body>

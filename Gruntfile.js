@@ -10,6 +10,7 @@ module.exports = function(grunt) {
                     // e.g. 'bower_components/chai/lib/chai.js' will be copied to 'test/js/libs/chai.js'
                     'js/jquery.js': 'jquery/dist/jquery.js',
                     'css/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
+                    'js/bootstrap.js': 'bootstrap/dist/js/bootstrap.js',
                     'js/knockout.js': 'knockout/dist/knockout.js'
                 }
             }
