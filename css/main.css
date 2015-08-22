@@ -1,40 +1,32 @@
-.row-eq-height {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-}
-
-.valigned {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    align-items: center;
-}
 
 body {
   padding-top: 50px;
-  height:
    }
 
-#map-container {
-  padding: 0;
-}
 #map {
   height: calc(100vh - 50px);
   width: 100%;
-  padding-bottom: 5%;
+  /*padding-bottom: 5%;*/
 }
 
-.overlay {
-  position: absolute;
-  top:70px;
-  left:75%;
-  width: 250px;
+.searchbox {
+  width: 85%;
+  display: inline;
 }
 
 .results-pc {
    max-height: calc(100vh - 90px);
    overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+    .container {
+      padding:0;
+      margin:0;
+    }
+
+    .navbar-form {
+      margin-bottom:0;
+      margin-top:0;
+    }
 }
