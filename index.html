@@ -17,23 +17,25 @@
             <div class="navbar-header hidden-xs">
                 <a class="navbar-brand" href="#">Neighbourhood map</a>
             </div>
-            <form class="nav navbar-form navbar-right" data-bind="submit: addLocation">
-                <input type="text" class="form-control searchbox" placeholder="Search for..." name="searchText">
-                <input class="btn btn-default" type="submit" value="Go!">
+            <form class="input-group navbar-form navbar-right" data-bind="submit: addLocation">
+                <input type="text" class="form-control" placeholder="Search for..." name="searchText">
+                <span class="input-group-btn">
+        <button class="btn btn-default" type="submit">Go!</button>
+      </span>
             </form>
         </div>
     </nav>
     <div class="container-fluid" id="map-container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-sm-9">
                 <div data-bind="map: map, markers: locationList" id="map"></div>
             </div>
-            <div class="col-md-3">
-                <h3 class="text-center">Search results</h3>
+            <div class="col-sm-3">
+                <h4 class="text-center">Search results</h4>
                 <div class="list-group results" data-bind="foreach: locationList">
                     <a href="#" class="list-group-item" data-bind="click: $parent.setCurrentLocation">
-                        <h4 class="list-group-item-heading" data-bind="text: name"></h4>
-                        <p class="list-group-item-text" data-bind="text: description"></p>
+                        <h5 class="list-group-item-heading" data-bind="text: name"></h5>
+                        <p class="list-group-item-text small" data-bind="text: description"></p>
                     </a>
                 </div>
             </div>
