@@ -7,6 +7,7 @@ var Loc = function (data) {
     this.name = ko.observable(data.name);
     this.marker = ko.observable(data.marker);
     this.description = ko.observable(data.description);
+    this.visible = ko.observable(data.visible);
 };
 
 var ViewModel = function () {
@@ -49,7 +50,8 @@ var ViewModel = function () {
                 self.locationList.push(new Loc({
                     name: results[i].name,
                     marker: marker,
-                    description: results[i].formatted_address
+                    description: results[i].formatted_address,
+                    visible: true
                 }));
             }
         }
@@ -61,7 +63,7 @@ var ViewModel = function () {
         query: 'restaraunts'
     }, self.addLocationCallback);
 
-    this.currentLocation = ko.observable(this.locationList()[0]);
+    //this.currentLocation = ko.observable(this.locationList()[0]);
 
     this.getFsqReviews = function (locationName, marker) {
         var venueRequestUrl = 'https://api.foursquare.com/v2/venues/search?ll=53.55,9.93&client_id=QZHN3TDUICZBINB31CE3SZP3PYUZC5BLRYHZEFVYL0I51AU3&client_secret=U2IBTFX4XYW0TKFJI35U0JURW2YUVOWO1FX0COBHTTT3QK0Z&v=20150830&inten=match&limit=1&query=' + locationName;
@@ -109,7 +111,7 @@ var ViewModel = function () {
         myMarker.myInfoWindow.open(self.map, myMarker);
         myMarker.setAnimation(google.maps.Animation.BOUNCE);
         self.map.setCenter(myMarker.getPosition());
-        self.currentLocation(this);
+        //self.currentLocation(this);
         window.setTimeout(function () {
             myMarker.setAnimation(null)
         }, 2000);
@@ -128,16 +130,32 @@ var ViewModel = function () {
         self.locationList.removeAll();
     };
 
-    this.addLocation = function (formElement) {
-        self.clearLocations();
-        self.service.textSearch({
-                location: hamburg,
-                radius: '1000',
-                query: formElement.searchText.value
-            },
-            self.addLocationCallback);
-    };
+    this.searchLocation = function (formElement) {
+        var name = "", desc = "", reviews = "",
+            searchTerm = formElement.searchText.value.toLowerCase(),
+            myLocations = self.locationList.removeAll();
 
+        self.closeInfoWindows();
+        self.clearLocations();
+
+        for(var i = 0; i < myLocations.length; i++) {
+            name = myLocations[i].name().toLowerCase();
+            desc = myLocations[i].description().toLowerCase();
+            reviews = myLocations[i].marker().myInfoWindow.content.toLowerCase();
+            if(name.search(searchTerm) >= 0 ||
+               desc.search(searchTerm) >= 0 ||
+               reviews.search(searchTerm) >= 0) {
+                myLocations[i].visible(true);
+                myLocations[i].marker().setMap(self.map);
+            } else {
+                myLocations[i].visible(false);
+                myLocations[i].marker().setMap(null);
+            }
+            self.locationList.push(myLocations[i]);
+
+            console.log("search loop");
+        }
+    };
 };
 
 ko.applyBindings(new ViewModel());

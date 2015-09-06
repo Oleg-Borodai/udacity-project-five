@@ -17,7 +17,7 @@
             <div class="navbar-header hidden-xs">
                 <a class="navbar-brand" href="#">Neighbourhood map</a>
             </div>
-            <form class="input-group navbar-form navbar-right" data-bind="submit: addLocation">
+            <form class="input-group navbar-form navbar-right" data-bind="submit: searchLocation">
                 <input type="text" class="form-control" placeholder="Search for..." name="searchText">
                 <span class="input-group-btn">
         <button class="btn btn-default" type="submit">Go!</button>
@@ -33,7 +33,7 @@
             <div class="col-sm-3">
                 <h4 class="text-center">Search results</h4>
                 <div class="list-group results" data-bind="foreach: locationList">
-                    <a href="#" class="list-group-item" data-bind="click: $parent.setCurrentLocation">
+                    <a href="#" class="list-group-item" data-bind="click: $parent.setCurrentLocation, visible: visible">
                         <h5 class="list-group-item-heading" data-bind="text: name"></h5>
                         <p class="list-group-item-text small" data-bind="text: description"></p>
                     </a>
