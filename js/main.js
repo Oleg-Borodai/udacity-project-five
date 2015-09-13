@@ -30,7 +30,7 @@ var ViewModel = function () {
       google maps API and it populates observableArray with list of places*/
     self.addLocationCallback = function (results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < results.length; i++) {
+            for (var i = 0, m = results.length; i < m; i++) {
                 var marker = new google.maps.Marker({
                     map: self.map,
                     position: results[i].geometry.location,
@@ -96,13 +96,13 @@ var ViewModel = function () {
                 $.getJSON(tipRequestUrl, function (data) {
                     if (data.meta.code == 200) {
                         var tips = data.response.tips.items;
-                        for (var i = 0; i < tips.length; i++) {
+                        for (var i = 0, m = tips.length; i < m; i++) {
                             result.push({
                                 text: tips[i].text,
                                 user: tips[i].user.firstName + ' ' + tips[i].user.lastName
                             });
                         }
-                        for (i = 0; i < result.length; i++) {
+                        for (i = 0, m = result.length; i < m; i++) {
                             html += '<p><strong>' + result[i].user + ':</strong>';
                             html += result[i].text + '</p>';
                         }
@@ -138,13 +138,13 @@ var ViewModel = function () {
     };
 
     self.closeInfoWindows = function () {
-        for (var i = 0; i < self.locationList().length; i++) {
+        for (var i = 0, m = self.locationList().length; i < m; i++) {
             self.locationList()[i].marker().myInfoWindow.close();
         }
     };
 
     self.clearLocations = function () {
-        for (var i = 0; i < self.locationList().length; i++) {
+        for (var i = 0, m = self.locationList().length; i < m; i++) {
             self.locationList()[i].marker().setMap(null);
         }
         self.locationList.removeAll();
@@ -159,7 +159,7 @@ var ViewModel = function () {
         self.closeInfoWindows();
         self.clearLocations();
 
-        for (var i = 0; i < myLocations.length; i++) {
+        for (var i = 0, m = myLocations.length; i < m; i++) {
             name = myLocations[i].name().toLowerCase();
             desc = myLocations[i].description().toLowerCase();
             if (name.search(searchTerm) != -1 || desc.search(searchTerm) != -1) {
