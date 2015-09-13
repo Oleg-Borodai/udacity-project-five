@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+
 </head>
 
 <body>
@@ -28,22 +29,24 @@
     <div class="container-fluid" id="map-container">
         <div class="row">
             <div class="col-sm-9">
-                <div data-bind="map: map, markers: locationList" id="map"></div>
+                <div data-bind="map: map, markers: locationList, css: {collapsed: collapsedState() === true}" class="map" id="map"></div>
             </div>
-            <div class="col-sm-3">
-                <h4 class="text-center">Search results</h4>
-                <div class="list-group results" data-bind="foreach: locationList">
-                    <a href="#" class="list-group-item" data-bind="click: $parent.setCurrentLocation, visible: visible">
-                        <h5 class="list-group-item-heading" data-bind="text: name"></h5>
-                        <p class="list-group-item-text small" data-bind="text: description"></p>
-                    </a>
+            <div class="col-sm-3" id="accordion">
+                <h4 class="text-center" data-bind="click: setCollapseState">Search results</h4>
+                <div>
+                    <div class="list-group results" data-bind="foreach: locationList">
+                        <a href="#" class="list-group-item" data-bind="click: $parent.setCurrentLocation, visible: visible">
+                            <h5 class="list-group-item-heading" data-bind="text: name"></h5>
+                            <p class="list-group-item-text small" data-bind="text: description"></p>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     </div>
     <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <script src="js/jquery-ui.js"></script>
     <script src="js/knockout.js"></script>
     <script src="js/main.js"></script>
 </body>

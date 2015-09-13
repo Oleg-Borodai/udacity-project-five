@@ -1,7 +1,6 @@
 'use strict';
 
 /*global ko, google, $*/
-
 var hamburg = {
     lat: 53.555,
     lng: 9.929
@@ -17,16 +16,19 @@ var Loc = function (data) {
 var ViewModel = function () {
     var self = this;
 
-    this.map = new google.maps.Map(document.querySelector('#map'), {
+    self.map = new google.maps.Map(document.querySelector('#map'), {
         zoom: 15,
         center: hamburg
     });
-    this.service = new google.maps.places.PlacesService(this.map);
-    this.locationList = ko.observableArray([]);
+    self.service = new google.maps.places.PlacesService(this.map);
+    self.locationList = ko.observableArray([]);
+
+    self.collapsedState = ko.observable(false);
+    self.isMobile = false;
 
     /*This function is executed after initial search of place through
       google maps API and it populates observableArray with list of places*/
-    this.addLocationCallback = function (results, status) {
+    self.addLocationCallback = function (results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 var marker = new google.maps.Marker({
@@ -59,11 +61,18 @@ var ViewModel = function () {
     }, self.addLocationCallback);
 
     /*service fucntion to add click listeneres on markers*/
-    this.addListenerForMarker = function (markerParam) {
+    self.addListenerForMarker = function (markerParam) {
         google.maps.event.addListener(markerParam, 'click', function () {
+            if (self.isMobile && !self.collapsedState()) {
+                $('#accordion').accordion({
+                    active: false
+                });
+                self.setCollapseState();
+            }
             self.closeInfoWindows();
             markerParam.myInfoWindow.open(self.map, markerParam);
             markerParam.setAnimation(google.maps.Animation.BOUNCE);
+            self.map.setCenter(markerParam.getPosition());
             window.setTimeout(function () {
                 markerParam.setAnimation(null);
             }, 2000);
@@ -71,7 +80,7 @@ var ViewModel = function () {
     };
 
     /*service function to get reviews from foursquare*/
-    this.getFsqReviews = function (locationName, marker) {
+    self.getFsqReviews = function (locationName, marker) {
         var venueRequestUrl = 'https://api.foursquare.com/v2/venues/search?ll=53.55,9.93&client_id=QZHN3TDUICZBINB31CE3SZP3PYUZC5BLRYHZEFVYL0I51AU3&client_secret=U2IBTFX4XYW0TKFJI35U0JURW2YUVOWO1FX0COBHTTT3QK0Z&v=20150830&inten=match&limit=1&query=' + locationName;
         var tipRequestStartUrl = 'https://api.foursquare.com/v2/venues/';
         var tipRequestEndUrl = '/tips?client_id=QZHN3TDUICZBINB31CE3SZP3PYUZC5BLRYHZEFVYL0I51AU3&client_secret=U2IBTFX4XYW0TKFJI35U0JURW2YUVOWO1FX0COBHTTT3QK0Z&v=20150830&sort=popular&limit=2';
@@ -111,7 +120,13 @@ var ViewModel = function () {
         });
     };
 
-    this.setCurrentLocation = function () {
+    self.setCurrentLocation = function () {
+        if (self.isMobile) {
+            $('#accordion').accordion({
+                active: false
+            });
+            self.setCollapseState();
+        }
         self.closeInfoWindows();
         var myMarker = this.marker();
         myMarker.myInfoWindow.open(self.map, myMarker);
@@ -122,20 +137,20 @@ var ViewModel = function () {
         }, 2000);
     };
 
-    this.closeInfoWindows = function () {
+    self.closeInfoWindows = function () {
         for (var i = 0; i < self.locationList().length; i++) {
             self.locationList()[i].marker().myInfoWindow.close();
         }
     };
 
-    this.clearLocations = function () {
+    self.clearLocations = function () {
         for (var i = 0; i < self.locationList().length; i++) {
             self.locationList()[i].marker().setMap(null);
         }
         self.locationList.removeAll();
     };
 
-    this.searchLocation = function (formElement) {
+    self.searchLocation = function (formElement) {
         var name = '',
             desc = '',
             searchTerm = formElement.searchText.value.toLowerCase(),
@@ -160,6 +175,39 @@ var ViewModel = function () {
             return elem.visible() === true;
         });
         self.map.setCenter(results[0].marker().getPosition());
+    };
+
+    self.setCollapseState = function () {
+        if (self.isMobile) {
+            self.collapsedState(!self.collapsedState());
+            google.maps.event.trigger(self.map, 'resize');
+            if (!self.collapsedState()) {
+                self.closeInfoWindows();
+            }
+        }
+    };
+
+    $(window).resize(function () {
+        self.checkWidthAndLoadAccordion();
+    });
+
+    $(document).ready(function () {
+        self.checkWidthAndLoadAccordion();
+    });
+
+    self.checkWidthAndLoadAccordion = function () {
+        if ($(window).width() <= 768) {
+            self.isMobile = true;
+            $('#accordion').accordion({
+                collapsible: true
+            });
+        } else {
+            self.isMobile = false;
+            try {
+                $('#accordion').accordion('destroy');
+            } catch (e) {}
+            self.collapsedState(false);
+        }
     };
 };
 

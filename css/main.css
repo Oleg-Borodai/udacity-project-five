@@ -3,7 +3,7 @@ body {
     overflow: hidden;
 }
 
-#map {
+.map {
     height: calc(100vh - 50px);
     width: 100%;
 }
@@ -30,8 +30,11 @@ body {
         padding-bottom: 7px;
         padding-top: 7px;
     }
-    #map {
+    .map {
         height: calc((100vh - 79px)/2);
+    }
+    .collapsed {
+        height: calc(100vh - 75px);
     }
     .results {
         max-height: calc((100vh - 79px)/2);
@@ -59,4 +62,13 @@ body {
     border-radius: 4px;
     background-color: rgba(0,0,0,.5);
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+.ui-accordion-header  {
+  outline: none;
+}
+
+#accordion .ui-state-hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
