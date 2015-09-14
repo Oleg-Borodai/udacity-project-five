@@ -110,13 +110,13 @@ var ViewModel = function () {
                             content: html
                         });
                     }
-                }).error(function () {
-                    /*'Ooops, something went wrong'*/
+                }).fail(function () {
+                    console.log('Ooops, something went wrong');
                 });
 
             }
-        }).error(function () {
-            /*'Ooops, something went wrong'*/
+        }).fail(function () {
+            console.log('Ooops, something went wrong');
         });
     };
 
