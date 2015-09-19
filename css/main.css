@@ -29,7 +29,7 @@ body {
     top: 10%;
     left: 50%;
     width: 300px;
-     z-index: 7000;
+    z-index: 7000;
 }
 
 @media (max-width: 767px) {
@@ -39,19 +39,15 @@ body {
         padding-bottom: 7px;
         padding-top: 7px;
     }
-
     .map {
         height: calc((100vh - 79px)/2);
     }
-
     .collapsed {
         height: calc(100vh - 75px);
     }
-
     .results {
         max-height: calc((100vh - 79px)/2);
     }
-
     h4 {
         margin-bottom: 2px;
         margin-top: 2px;
