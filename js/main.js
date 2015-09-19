@@ -23,6 +23,9 @@ var ViewModel = function () {
     self.service = new google.maps.places.PlacesService(this.map);
     self.locationList = ko.observableArray([]);
 
+    // Visibility flag for error message popup
+    self.showErrorMessage = ko.observable(false);
+
     self.collapsedState = ko.observable(false);
     self.isMobile = false;
 
@@ -111,12 +114,12 @@ var ViewModel = function () {
                         });
                     }
                 }).fail(function () {
-                    console.log('Ooops, something went wrong');
+                    self.showErrorMessage(true);
                 });
 
             }
         }).fail(function () {
-            console.log('Ooops, something went wrong');
+            self.showErrorMessage(true);
         });
     };
 
@@ -208,6 +211,11 @@ var ViewModel = function () {
             } catch (e) {}
             self.collapsedState(false);
         }
+    };
+
+    // function to close error message
+    self.hideErrorMessage = function() {
+        self.showErrorMessage(false);
     };
 };
 

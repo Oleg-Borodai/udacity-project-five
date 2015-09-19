@@ -28,6 +28,10 @@
     <div class="container-fluid" id="map-container">
         <div class="row">
             <div class="col-sm-9">
+                <div id="message" class="alert alert-warning alert-dismissible" role="alert" data-bind="visible: showErrorMessage" style="display: none">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" data-bind="click: hideErrorMessage"><span aria-hidden="true">&times;</span></button>
+                    <strong>Warning!</strong> Some AJAX requests failed
+                </div>
                 <div data-bind="map: map, markers: locationList, css: {collapsed: collapsedState() === true}" class="map" id="map"></div>
             </div>
             <div class="col-sm-3" id="accordion">

@@ -23,6 +23,15 @@ body {
     margin: 0;
 }
 
+#message {
+    position: fixed;
+    margin-left: -150px;
+    top: 10%;
+    left: 50%;
+    width: 300px;
+     z-index: 7000;
+}
+
 @media (max-width: 767px) {
     .navbar-form {
         margin-bottom: 0;
