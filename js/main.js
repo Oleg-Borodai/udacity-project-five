@@ -196,7 +196,7 @@ var ViewModel = function () {
     });
 
     self.checkWidthAndLoadAccordion = function () {
-        if ($(window).width() <= 768) {
+        if ($(window).width() < 768) {
             self.isMobile = true;
             $('#accordion').accordion({
                 collapsible: true
